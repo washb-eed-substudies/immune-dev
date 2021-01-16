@@ -1,8 +1,6 @@
 rm(list=ls())
  
 source(here::here("0-config.R"))
-#devtools::install_github("washb-eed-substudies/washbgam")
-#source(here::here("src/0-gam-functions.R"))
 
 d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
 
@@ -209,7 +207,7 @@ saveRDS(H3_res, here("results/unadjusted/H3_res.RDS"))
 saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
 
 
-#### Hypothesis ####
+#### Hypothesis 4 ####
 # IGF and concurrent and subsequent development
 Xvars <- c("t2_ln_igf")            
 Yvars <- c("sum_who", 
