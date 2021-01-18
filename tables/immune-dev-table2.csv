@@ -1,6 +1,6 @@
-""," "," "," "," "," "," Outcome, 75th Percentile v. 25th Percentile"," "," "," "," "," "," "," "
+"","name","Outcome","N","25th Percentile","75th Percentile"," Outcome, 75th Percentile v. 25th Percentile"," "," "," "," "," "," "," "
 "1"," "," "," "," "," ","Unadjusted"," "," "," ","Fully adjusted"," "," "," "
-"2"," ","Outcome","N","25th Percentile","75th Percentile","Predicted Outcome at 25th Percentile","Predicted Outcome at 75th Percentile","Coefficient (95% CI)","P-value","Predicted Outcome at 25th Percentile","Predicted Outcome at 75th Percentile","Coefficient (95% CI)","P-value"
+"2"," "," "," "," "," ","Predicted Outcome at 25th Percentile","Predicted Outcome at 75th Percentile","Coefficient (95% CI)","P-value","Predicted Outcome at 25th Percentile","Predicted Outcome at 75th Percentile","Coefficient (95% CI)","P-value"
 "3","Ln Pro-inflammatory cytokines/IL-10","Sum of 2nd, 4th, 5th, and 6th WHO motor milestones","579","0.95","1.54","2.52","2.46","-0.06 (-0.16, 0.04)","0.43","2.61","2.56","-0.05 (-0.14, 0.03)","0.6"
 "4","","","","","","","","","","","","",""
 "5","Ln IL-2/IL-10","Sum of 2nd, 4th, 5th, and 6th WHO motor milestones","575","-3.23","-1.94","2.52","2.47","-0.05 (-0.17, 0.07)","0.59","2.67","2.59","-0.08 (-0.4, 0.25)","0.78"
