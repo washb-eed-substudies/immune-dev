@@ -32,7 +32,7 @@ simul_plot$p
 # all immune ratios at Y1 v. development outcomes at Y1
 Xvars <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", "t2_ratio_th1_il10", "t2_ratio_th2_il10",     
            "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn")            
-Yvars <- c("sum_who") #c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2") 
+Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2") 
 
 #Fit models
 H1_models <- NULL
@@ -147,9 +147,9 @@ saveRDS(H2_plot_data, here("figure-data/H2_unadj_spline_data.RDS"))
 #### Hypothesis 3: sum score and development ####
 # sum score and concurrent and subsequent development
 Xvars <- c("sumscore_t2_Z")            
-Yvars <- c("sum_who", 
+Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2",
            "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
-           "z_cdi_say_t3", "z_cdi_und_t3") # add "z_cdi_und_t2", "z_cdi_say_t2" later
+           "z_cdi_say_t3", "z_cdi_und_t3") 
 
 #Fit models
 H3_models <- NULL
@@ -210,9 +210,9 @@ saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
 #### Hypothesis 4 ####
 # IGF and concurrent and subsequent development
 Xvars <- c("t2_ln_igf")            
-Yvars <- c("sum_who", 
+Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2",
            "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
-           "z_cdi_say_t3", "z_cdi_und_t3") # add "z_cdi_und_t2", "z_cdi_say_t2" later
+           "z_cdi_say_t3", "z_cdi_und_t3") 
 
 #Fit models
 H4_models <- NULL
