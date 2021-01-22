@@ -254,4 +254,4 @@ save_as_docx("Table 2: Association between Immune Status and Child Development O
              "Table 4: Association between Immune Status and CDI Scores at Year 2" = tbl4flex, 
              "Table 5: Association between Immune Status at Year 1 and EASQ Scores at Year 2" = tbl5flex, 
              "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl6flex, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v2.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v3.docx')
