@@ -7,9 +7,9 @@ d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-developmen
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
-         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "roof", "HHwealth",
+         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "HHwealth", "tr",
          "ari7d_t2", "diar7d_t2", "nose7d_t2", 
-         "fci_t2", "cesd_sum_t2", "life_viol_any_t3", "tr")
+         "fci_t2", "cesd_sum_t2", "life_viol_any_t3")
 
 Wvars[!(Wvars %in% colnames(d))]
 
@@ -17,11 +17,11 @@ Wvars[!(Wvars %in% colnames(d))]
 
 #NOTES
 #Does monsoon_ut2 need to be replaced with monsoon_ht2 for growth measures? (and agemth_ut2 with agedays_ht2?)
-Wvars22<-c("ageday_bt2", "agedays_motor", "month_bt2", "month_motor") 
-Wvars33<-c("ageday_bt3", "agedays_easq", "month_bt3", "month_easq", 
-           "ari7d_t3", "diar7d_t3", "nose7d_t3", "fci_t3", "laz_t2", "waz_t2",
+Wvars22<-c("ageday_bt2", "agedays_motor", "month_bt2", "month_motor", "laz_t1_cat", "waz_t1_cat") 
+Wvars33<-c("ageday_bt3", "month_bt3",
+           "ari7d_t3", "diar7d_t3", "nose7d_t3", "fci_t3", "laz_t2_cat", "waz_t2_cat",
            "cesd_sum_ee_t3", "pss_sum_mom_t3") 
-Wvars23<-c("ageday_bt2", "agedays_easq", "month_bt2", "month_easq", 
+Wvars23<-c("ageday_bt2", "month_bt2",
            "ari7d_t3", "diar7d_t3", "nose7d_t3", "fci_t3", "laz_t2", "waz_t2",
            "cesd_sum_ee_t3", "pss_sum_mom_t3")
 
@@ -32,6 +32,11 @@ W2_immune.W3_dev <- c(Wvars, Wvars23) %>% unique(.)
 W2_immune.W2_dev[!(W2_immune.W2_dev %in% colnames(d))]
 W3_immune.W3_dev[!(W3_immune.W3_dev %in% colnames(d))]
 W2_immune.W3_dev[!(W2_immune.W3_dev %in% colnames(d))]
+
+add_t3_covariates <- function(j, W){
+  if(grepl("easq", j)){return (c(W, "agedays_easq", "month_easq"))}
+  else if(grepl("cdi", j) & grepl("t3", j)){return (c(W, "agedays_cdi_t3", "month_cdi_t3"))}
+}
 
 #Loop over exposure-outcome pairs
 
@@ -63,7 +68,7 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=W3_immune.W3_dev)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=add_t3_covariates(j, W3_immune.W3_dev))
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H1_adj_models <- bind_rows(H1_adj_models, res)
   }
@@ -116,7 +121,7 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=W2_immune.W3_dev)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=add_t3_covariates(j, W2_immune.W3_dev))
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H2_adj_models <- bind_rows(H2_adj_models, res)
   }
@@ -165,7 +170,7 @@ Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2",
 
 pick_covariates<-function(j){
   if(j %in% c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2")){Wset=W2_immune.W2_dev}
-  else{Wset=W2_immune.W3_dev}
+  else{Wset=add_t3_covariates(j, W2_immune.W3_dev)}
   return(Wset)
 }
 
@@ -190,8 +195,7 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    Wset<-pick_covariates(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wset)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=add_t3_covariates(j, W3_immune.W3_dev))
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H3_adj_models <- bind_rows(H3_adj_models, res)
   }
@@ -258,8 +262,7 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    Wset<-pick_covariates(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=Wset)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=add_t3_covariates(j, W3_immune.W3_dev))
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H4_adj_models <- bind_rows(H4_adj_models, res)
   }

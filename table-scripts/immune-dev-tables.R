@@ -32,12 +32,13 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
   ### this function produces a table that can be saved as a csv
   
   tbl <- data.table(name = character(), "Outcome" = character(), "N" = character(), "25th Percentile" = character(), "75th Percentile" = character(),
-                    " Outcome, 75th Percentile v. 25th Percentile" = character(), " " = character(), " " = character(), " " = character(), 
-                    " " = character(), " " = character(), " " = character(), " " = character())
-  tbl <- rbind(tbl, list(" ", " ", " ", " ", " ", "Unadjusted", " ", " ", " ", "Fully adjusted", " ", " ", " "))
+                    " Outcome, 75th Percentile v. 25th Percentile" = character(), " " = character(), " " = character(), " " = character(), " " = character(),
+                    " " = character(), " " = character(), " " = character(), " " = character(), " " = character())
+  tbl <- rbind(tbl, list(" ", " ", " ", " ", " ", "Unadjusted", " ", " ", " ", " ", "Fully adjusted", " ", " ", " ", " "))
   tbl <- rbind(tbl, list(" ", " ", " ", " ", " ", 
-                         "Predicted Outcome at 25th Percentile", "Predicted Outcome at 75th Percentile", "Coefficient (95% CI)", "P-value", 
-                         "Predicted Outcome at 25th Percentile", "Predicted Outcome at 75th Percentile", "Coefficient (95% CI)", "P-value"))
+                         "Predicted Outcome at 25th Percentile", "Predicted Outcome at 75th Percentile", "Coefficient (95% CI)", "P-value", "FDR adjusted P-value", 
+                         "Predicted Outcome at 25th Percentile", "Predicted Outcome at 75th Percentile", "Coefficient (95% CI)", "P-value", "FDR adjusted P-value"))
+  skipped<-F
   for (i in 1:length(exposure)) {
     for (j in 1:length(outcome)) {
       exp <- exposure[i]
@@ -46,18 +47,23 @@ growth_tbl <- function(name, expo_var, out_var, exposure, outcome, results, resu
       filtered_adj <- results_adj[results_adj$Y==out & results_adj$X==exp,]
       unadj <- paste(round(filtered_res$`point.diff`, 2), " (", round(filtered_res$`lb.diff`, 2), ", ", round(filtered_res$`ub.diff`, 2), ")", sep="")
       adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
-      if (j==1){
+      if (nrow(filtered_res)==0){
+        skipped<-T
+        next
+      }
+      if(j==1|skipped==T){
         tbl <- rbind(tbl, list(expo_var[i], out_var[j], filtered_res$N, round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2), round(filtered_adj$BH.Pval, 2)))
+        skipped<-F
       }else {
         tbl <- rbind(tbl, list("", out_var[j],  filtered_res$N, round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2), round(filtered_adj$BH.Pval, 2)))
       }
     }
     if (i != length(exposure)) {
-      tbl <- rbind(tbl, list("","","","","","","","","","","","",""))
+      tbl <- rbind(tbl, list("","","","","","","","","","","","","","",""))
     }
   }
   tbl
@@ -76,7 +82,8 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
   ### directly to a word document!
   
   # build table
-  tbl <- data.table(matrix(nrow=0, ncol=13))
+  tbl <- data.table(matrix(nrow=0, ncol=15))
+  skipped<-F
   for (i in 1:length(exposure)) {
     for (j in 1:length(outcome)) {
       exp <- exposure[i]
@@ -85,18 +92,23 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
       filtered_adj <- results_adj[results_adj$Y==out & results_adj$X==exp,]
       unadj <- paste(round(filtered_res$`point.diff`, 2), " (", round(filtered_res$`lb.diff`, 2), ", ", round(filtered_res$`ub.diff`, 2), ")", sep="")
       adj <- paste(round(filtered_adj$`point.diff`, 2), " (", round(filtered_adj$`lb.diff`, 2), ", ", round(filtered_adj$`ub.diff`, 2), ")", sep="")
-      if (j==1){
+      if (nrow(filtered_res)==0){
+        skipped<-T
+        next
+      }
+      if(j==1|skipped==T){
         tbl <- rbind(tbl, list(expo_var[i], out_var[j],  filtered_res$N, round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2), round(filtered_adj$BH.Pval, 2)))
+        skipped=F
       }else {
         tbl <- rbind(tbl, list(" ", out_var[j],  filtered_res$N, round(filtered_res$q1, 2), round(filtered_res$q3, 2), 
-                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$corrected.Pval, 2), 
-                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$corrected.Pval, 2)))
+                               round(filtered_res$pred.q1, 2), round(filtered_res$pred.q3, 2), unadj, round(filtered_res$Pval, 2), round(filtered_res$BH.Pval, 2), 
+                               round(filtered_adj$pred.q1, 2), round(filtered_adj$pred.q3, 2), adj, round(filtered_adj$Pval, 2), round(filtered_adj$BH.Pval, 2)))
       }
     }
     if (i != length(exposure)) {
-      tbl <- rbind(tbl, list("","","","","","","","", "","","","",""))
+      tbl <- rbind(tbl, list("","","","","","","","", "","","","","","",""))
     }
   }
   
@@ -104,11 +116,11 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
   flextbl<-flextable(tbl, col_keys=names(tbl))
   flextbl <- set_header_labels(flextbl,
                                values = list("V1" = " ", "V2" = " ", "V3" = " ", "V4" = " ", "V5" = " ",
-                                             "V6" = "Predicted Outcome at 25th Percentile", "V7" = "Predicted Outcome at 75th Percentile", "V8" = "Coefficient (95% CI)", "V9" = "P-value",
-                                             "V10" = "Predicted Outcome at 25th Percentile", "V11" = "Predicted Outcome at 75th Percentile", "V12" = "Coefficient (95% CI)", "V13" = "P-value"))
-  flextbl <- add_header_row(flextbl, values = c("","","","","", "Unadjusted", "Fully adjusted"), colwidths=c(1,1,1,1,1,4,4))
+                                             "V6" = "Predicted Outcome at 25th Percentile", "V7" = "Predicted Outcome at 75th Percentile", "V8" = "Coefficient (95% CI)", "V9" = "P-value", "V10" = "FDR Corrected P-value",
+                                             "V11" = "Predicted Outcome at 25th Percentile", "V12" = "Predicted Outcome at 75th Percentile", "V13" = "Coefficient (95% CI)", "V14" = "P-value", "V15" = "FDR Corrected P-value"))
+  flextbl <- add_header_row(flextbl, values = c("","","","","", "Unadjusted", "Fully adjusted"), colwidths=c(1,1,1,1,1,5,5))
   # flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
-  flextbl <- add_header_row(flextbl, values = c(name, "Outcome","N","25th Percentile","75th Percentile", "Outcome, 75th Percentile v. 25th Percentile"), colwidths=c(1,1,1,1,1,8))
+  flextbl <- add_header_row(flextbl, values = c(name, "Outcome","N","25th Percentile","75th Percentile", "Outcome, 75th Percentile v. 25th Percentile"), colwidths=c(1,1,1,1,1,10))
   # flextbl <- hline_top(flextbl, part="header", border=fp_border(color="black"))
   flextbl <- hline(flextbl, part="header", border=fp_border(color="black"))
   flextbl <- hline_bottom(flextbl, part="body", border=fp_border(color="black"))
@@ -120,7 +132,6 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
   
   flextbl
 }
-
 
 
 #### MAIN TABLES ####
@@ -178,10 +189,10 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
 # concurrent y1 immune markers and y1 who motor milestones
 
 exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", "t2_ratio_th1_il10", "t2_ratio_th2_il10",     
-              "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn", "sumscore_t2_Z", "t2_ln_igf") 
+              "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn", "sumscore_t2_Z") 
 outcome <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2")
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines", "Ln IGF-1") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehension Z-score", "CDI expressive language Z-score")
 
 tbl2 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
@@ -191,10 +202,10 @@ tbl2flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, un
 # concurrent y2 immune markers and y2 easq scores
 
 exposure <- c("t3_ratio_pro_il10", "t3_ratio_il2_il10", "t3_ratio_gmc_il10", "t3_ratio_th1_il10", "t3_ratio_th2_il10",     
-              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_ifn", "sumscore_t3_Z", "t3_ln_igf")   
+              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_ifn", "sumscore_t3_Z")   
 outcome <- c("z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln IFN-y", "Sum score of 13 cytokines", "Ln IGF-1") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("EASQ communication Z-score", "EASQ gross motor Z-score", "EASQ personal social Z-score", "EASQ combined Z-core") 
 tbl3 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
 tbl3flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
@@ -203,10 +214,10 @@ tbl3flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, un
 # concurrent y2 immune markers and y2 cdi scores
 
 exposure <- c("t3_ratio_pro_il10", "t3_ratio_il2_il10", "t3_ratio_gmc_il10", "t3_ratio_th1_il10", "t3_ratio_th2_il10",     
-              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_ifn", "sumscore_t3_Z", "t3_ln_igf")   
+              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_ifn", "sumscore_t3_Z")   
 outcome <- c("z_cdi_und_t3", "z_cdi_say_t3")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln IFN-y", "Sum score of 13 cytokines", "Ln IGF-1") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("CDI comprehension Z-score", "CDI expressive language Z-score") 
 tbl4 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
 tbl4flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
@@ -216,10 +227,10 @@ tbl4flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, un
 # y1 immune markers and subsequent y2 easq scores
 
 exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", "t2_ratio_th1_il10", "t2_ratio_th2_il10",     
-              "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn", "sumscore_t2_Z", "t2_ln_igf") 
+              "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn", "sumscore_t2_Z") 
 outcome <- c("z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines", "Ln IGF-1") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("EASQ communication Z-score", "EASQ gross motor Z-score", "EASQ personal social Z-score", "EASQ combined Z-core") 
 
 tbl5 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
@@ -229,14 +240,29 @@ tbl5flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, un
 # y1 immune markers and subsequent y2 cdi scores
 
 exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", "t2_ratio_th1_il10", "t2_ratio_th2_il10",     
-              "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn", "sumscore_t2_Z", "t2_ln_igf") 
+              "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", "t2_ln_agp", "t2_ln_crp", "t2_ln_ifn", "sumscore_t2_Z") 
 outcome <- c("z_cdi_und_t3", "z_cdi_say_t3")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines", "Ln IGF-1") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("CDI comprehension Z-score", "CDI expressive language Z-score") 
 
 tbl6 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
 tbl6flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
+
+#### Table 7 ####
+# IGF and all development outcomes
+
+exposure <- c("t2_ln_igf", "t3_ln_igf") 
+outcome <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2", "z_cdi_und_t3", "z_cdi_say_t3",
+             "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq")  
+expo_var <- c("Ln IGF-1 Year 1", "Ln IGF-1 Year 2") 
+out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehension Z-score Year 1", "CDI expressive language Z-score Year 1",
+             "CDI comprehension Z-score Year 2", "CDI expressive language Z-score Year 2", 
+             "EASQ communication Z-score Year 2", "EASQ gross motor Z-score Year 2", "EASQ personal social Z-score Year 2", "EASQ combined Z-score Year 2") 
+
+tbl7 <- growth_tbl("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl7flex <- growth_tbl_flex("Exposure", expo_var, out_var, exposure, outcome, unadj, adj)
+
 
 
 
@@ -248,10 +274,12 @@ write.csv(tbl3, here('tables/immune-dev-table3.csv'))
 write.csv(tbl4, here('tables/immune-dev-table4.csv'))
 write.csv(tbl5, here('tables/immune-dev-table5.csv'))
 write.csv(tbl6, here('tables/immune-dev-table6.csv'))
+write.csv(tbl7, here('tables/immune-dev-table7.csv'))
 
 save_as_docx("Table 2: Association between Immune Status and Child Development Outcomes at Year 1" = tbl2flex, 
              "Table 3: Association between Immune Status and EASQ Scores at Year 2" = tbl3flex, 
              "Table 4: Association between Immune Status and CDI Scores at Year 2" = tbl4flex, 
              "Table 5: Association between Immune Status at Year 1 and EASQ Scores at Year 2" = tbl5flex, 
              "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl6flex, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v3.docx')
+             "Table 7: Association between IGF-1 and Child Development" = tbl7flex, 
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v4.docx')
