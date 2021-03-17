@@ -87,10 +87,10 @@ tbl2flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, ex
 # concurrent y2 immune markers and y2 easq scores
 
 exposure <- c("t3_ratio_pro_il10", "t3_ratio_il2_il10", "t3_ratio_gmc_il10", "t3_ratio_th1_il10", "t3_ratio_th2_il10",     
-              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_ifn", "sumscore_t3_Z")   
+              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17",  "t3_ln_agp", "t3_ln_crp", "t3_ln_ifn", "sumscore_t3_Z")   
 outcome <- c("z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln IFN-y", "Sum score of 13 cytokines") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("EASQ communication Z-score", "EASQ gross motor Z-score", "EASQ personal social Z-score", "EASQ combined Z-core") 
 
 tbl3 <- growth_tbl("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T)
@@ -102,10 +102,10 @@ tbl3flexsupp <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, ex
 # concurrent y2 immune markers and y2 cdi scores
 
 exposure <- c("t3_ratio_pro_il10", "t3_ratio_il2_il10", "t3_ratio_gmc_il10", "t3_ratio_th1_il10", "t3_ratio_th2_il10",     
-              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_ifn", "sumscore_t3_Z")   
+              "t3_ratio_th17_il10", "t3_ratio_th1_th2", "t3_ratio_th1_th17", "t3_ln_agp", "t3_ln_crp", "t3_ln_ifn", "sumscore_t3_Z")   
 outcome <- c("z_cdi_und_t3", "z_cdi_say_t3")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", "Ln Th1/IL-10", "Ln Th2/IL-10",     
-              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln IFN-y", "Sum score of 13 cytokines") 
+              "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17", "Ln AGP", "Ln CRP", "Ln IFN-y", "Sum score of 13 cytokines") 
 out_var <- c("CDI comprehension Z-score", "CDI expressive language Z-score") 
 
 tbl4 <- growth_tbl("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T)
@@ -186,7 +186,7 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 4: Association between Immune Status at Year 1 and EASQ Scores at Year 2" = tbl5flex, 
              "Table 5: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl6flex, 
              "Table 6: Association between IGF-1 and Child Development" = tbl7flex, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v5.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v6.docx')
 
 save_as_docx("Table 1: Association between Immune Status and Child Development Outcomes at Year 1" = tbl2flexsupp, 
              "Table 2: Association between Immune Status and EASQ Scores at Year 2" = tbl3flexsupp, 
@@ -194,4 +194,4 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 4: Association between Immune Status at Year 1 and EASQ Scores at Year 2" = tbl5flexsupp, 
              "Table 5: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl6flexsupp, 
              "Table 6: Association between IGF-1 and Child Development" = tbl7flexsupp, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main supplementary v5.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main supplementary v6.docx')
