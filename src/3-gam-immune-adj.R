@@ -2,8 +2,9 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
-
+dfull <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
+d <- dfull %>% filter(tr %in% c("Nutrition + WSH", "Control")) 
+  
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
@@ -68,7 +69,10 @@ for(i in Xvars){
   for(j in Yvars){
     print(i)
     print(j)
-    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=add_t3_covariates(j, W3_immune.W3_dev))
+    if(i %in% c("t3_ln_agp", "t3_ln_crp")){
+      dfunc <- dfull
+    }else{dfunc <- d}
+    res_adj <- fit_RE_gam(d=dfunc, X=i, Y=j,  W=add_t3_covariates(j, W3_immune.W3_dev))
     res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
     H1_adj_models <- bind_rows(H1_adj_models, res)
   }
@@ -325,4 +329,24 @@ for(i in 1:nrow(HR_models)){
   preds <- predict_gam_HR(fit=HR_models$fit[i][[1]], d=HR_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
   HR_res <-  bind_rows(HR_res , preds$res)
 }
+
+#Make list of plots
+HR_adj_plot_list <- NULL
+HR_adj_plot_data <- NULL
+for(i in 1:nrow(HR_models)){
+  res <- data.frame(X=HR_models$X[i], Y=HR_models$Y[i])
+  simul_plot <- gam_simul_CI(HR_models$fit[i][[1]], HR_models$dat[i][[1]], xlab=res$X, ylab=res$Y, title="")
+  HR_adj_plot_list[[i]] <-  simul_plot$p
+  HR_adj_plot_data <-  rbind(HR_adj_plot_data, data.frame(Xvar=res$X, Yvar=res$Y, adj=0, simul_plot$pred%>% subset(., select = c(Y,X,id,fit,se.fit,uprP, lwrP,uprS,lwrS))))
+}
+
+
+#Save models
+saveRDS(HR_models, here("models/HR_adj_models.RDS"))
+
+#Save results
+saveRDS(HR_res, here("results/adjusted/HR_adj_res.RDS"))
+
+#Save plot data
+saveRDS(H4_adj_plot_data, here("figure-data/HR_adj_spline_data.RDS"))
 
