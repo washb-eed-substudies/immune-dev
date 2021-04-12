@@ -348,5 +348,5 @@ saveRDS(HR_models, here("models/HR_adj_models.RDS"))
 saveRDS(HR_res, here("results/adjusted/HR_adj_res.RDS"))
 
 #Save plot data
-saveRDS(H4_adj_plot_data, here("figure-data/HR_adj_spline_data.RDS"))
+saveRDS(HR_adj_plot_data, here("figure-data/HR_adj_spline_data.RDS"))
 
