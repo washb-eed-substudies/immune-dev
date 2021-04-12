@@ -236,12 +236,12 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flex, 
              path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v7.docx')
 
-save_as_docx("Table 1: Association between Immune Status and Child Development Outcomes at Year 1" = tbl2flex, 
-             "Table 2: Hazard Ratio for Motor Milestone Attainment for Immune Status at Year 1" = tbl3flex, 
-             "Table 3: Association between Immune Status and EASQ Scores at Year 2" = tbl4flex, 
-             "Table 4: Association between Immune Status and CDI Scores at Year 2" = tbl5flex, 
-             "Table 5: Association between Immune Status at Year 1 and EASQ Scores at Year 2" = tbl6flex, 
-             "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl7flex, 
-             "Table 7: Association between IGF-1 and Child Development" = tbl8flex, 
-             "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flex, 
+save_as_docx("Table 1: Association between Immune Status and Child Development Outcomes at Year 1" = tbl2flexsupp, 
+             "Table 2: Hazard Ratio for Motor Milestone Attainment for Immune Status at Year 1" = tbl3flexsupp, 
+             "Table 3: Association between Immune Status and EASQ Scores at Year 2" = tbl4flexsupp, 
+             "Table 4: Association between Immune Status and CDI Scores at Year 2" = tbl5flexsupp, 
+             "Table 5: Association between Immune Status at Year 1 and EASQ Scores at Year 2" = tbl6flexsupp, 
+             "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl7flexsupp, 
+             "Table 7: Association between IGF-1 and Child Development" = tbl8flexsupp, 
+             "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flexsupp, 
              path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main supplementary v7.docx')
