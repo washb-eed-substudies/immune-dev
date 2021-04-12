@@ -314,7 +314,7 @@ Yvars <- grep("who_", colnames(d), value=T)
 
 HR_models <- NULL
 for(i in Xvars){
-  for(j in Yvars[4:6]){
+  for(j in Yvars){
     print(i)
     print(j)
     res_unadj <- fit_HR_GAM(d=d, X=i, Y=j, age="agedays_motor", W=W2_immune.W2_dev)
