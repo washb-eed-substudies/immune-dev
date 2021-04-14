@@ -76,15 +76,15 @@ adj <- rbind(H1adj, H2adj, H3adj, H4adj, indadj)
 # concurrent y1 immune markers and y1 who motor milestones
 
 exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", 
-              "t2_ratio_th1_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13",
-              "t2_ratio_th2_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", "t2_ln_il12", "t2_ln_ifn", 
+              "t2_ratio_th1_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", "t2_ln_il12", "t2_ln_ifn", 
+              "t2_ratio_th2_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13",
               "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", 
               "sumscore_t2_Z", "t2_ln_agp", "t2_ln_crp") 
 outcome <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2")
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", 
-              "Ln Th1/IL-10", "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10",
+              "Ln Th1/IL-10", "Ln IL-12/IL-10", "Ln IFN-y/IL-10", "Ln IL-12", "Ln IFN-y",
+              "Ln Th2/IL-10", "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10",
               "Ln IL-4", "Ln IL-5", "Ln IL-13",
-              "Ln Th2/IL-10", "Ln IL-12/IL-10", "Ln IFN-y/IL-10", "Ln IL-12", "Ln IFN-y",
               "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17",
               "Sum score of 13 cytokines", "Ln AGP", "Ln CRP") 
 out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehension Z-score", "CDI expressive language Z-score")
@@ -146,15 +146,15 @@ tbl5flexsupp <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, ex
 # y1 immune markers and subsequent y2 easq scores
 
 exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", 
-              "t2_ratio_th1_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13",
-              "t2_ratio_th2_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", "t2_ln_il12", "t2_ln_ifn", 
+              "t2_ratio_th1_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", "t2_ln_il12", "t2_ln_ifn", 
+              "t2_ratio_th2_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13",
               "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", 
               "sumscore_t2_Z", "t2_ln_agp", "t2_ln_crp") 
 outcome <- c("z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", 
-              "Ln Th1/IL-10", "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10",
+              "Ln Th1/IL-10", "Ln IL-12/IL-10", "Ln IFN-y/IL-10", "Ln IL-12", "Ln IFN-y",
+              "Ln Th2/IL-10", "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10",
               "Ln IL-4", "Ln IL-5", "Ln IL-13",
-              "Ln Th2/IL-10", "Ln IL-12/IL-10", "Ln IFN-y/IL-10", "Ln IL-12", "Ln IFN-y",
               "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17",
               "Sum score of 13 cytokines", "Ln AGP", "Ln CRP") 
 out_var <- c("EASQ communication Z-score", "EASQ gross motor Z-score", "EASQ personal social Z-score", "EASQ combined Z-score") 
@@ -168,15 +168,15 @@ tbl6flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, ex
 # y1 immune markers and subsequent y2 cdi scores
 
 exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", 
-              "t2_ratio_th1_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13",
-              "t2_ratio_th2_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", "t2_ln_il12", "t2_ln_ifn", 
+              "t2_ratio_th1_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", "t2_ln_il12", "t2_ln_ifn", 
+              "t2_ratio_th2_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13",
               "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17", 
               "sumscore_t2_Z", "t2_ln_agp", "t2_ln_crp") 
 outcome <- c("z_cdi_und_t3", "z_cdi_say_t3")  
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF/IL-10", 
-              "Ln Th1/IL-10", "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10",
+              "Ln Th1/IL-10", "Ln IL-12/IL-10", "Ln IFN-y/IL-10", "Ln IL-12", "Ln IFN-y",
+              "Ln Th2/IL-10", "Ln IL-4/IL-10", "Ln IL-5/IL-10", "Ln IL-13/IL-10",
               "Ln IL-4", "Ln IL-5", "Ln IL-13",
-              "Ln Th2/IL-10", "Ln IL-12/IL-10", "Ln IFN-y/IL-10", "Ln IL-12", "Ln IFN-y",
               "Ln Th17/IL-10", "Ln Th1/Th2", "Ln Th1/Th17",
               "Sum score of 13 cytokines", "Ln AGP", "Ln CRP") 
 out_var <- c("CDI comprehension Z-score", "CDI expressive language Z-score") 
@@ -249,7 +249,7 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl7flex, 
              "Table 7: Association between IGF-1 and Child Development" = tbl8flex, 
              "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flex, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v7.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v8.docx')
 
 save_as_docx("Table 1: Association between Immune Status and Child Development Outcomes at Year 1" = tbl2flexsupp, 
              "Table 2: Hazard Ratio for Motor Milestone Attainment for Immune Status at Year 1" = tbl3flexsupp, 
@@ -259,4 +259,4 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl7flexsupp, 
              "Table 7: Association between IGF-1 and Child Development" = tbl8flexsupp, 
              "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flexsupp, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main supplementary v7.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main supplementary v8.docx')
