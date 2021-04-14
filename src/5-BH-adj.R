@@ -55,7 +55,7 @@ H2_adj_res$G = 1
 H3_adj_res$G = 1
 H4_adj_res$G = 2
 HR_adj_res$G = if_else(grepl("igf", HR_adj_res$X), 2, 1)
-ind_adj_res$G = 2
+ind_adj_res$G = 1
 
 
 

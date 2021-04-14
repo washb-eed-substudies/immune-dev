@@ -50,6 +50,7 @@ pick_covariates<-function(j){
 # outcomes y1 development, year 2 easq
 
 Xvars <- c("t2_ln_il12", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13", 
+           "t2_ratio_il12_il10", "t2_ratio_ifn_il10", 
            "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10")            
 Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2", "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
            "z_cdi_say_t3", "z_cdi_und_t3") 
