@@ -90,9 +90,9 @@ expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF
 out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehension Z-score", "CDI expressive language Z-score")
 
 tbl2 <- growth_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T)
-tbl2flex <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T)
+tbl2flex <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T, 1.3, 1.5)
 tbl2supp <- growth_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj)
-tbl2flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl2flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, F, .9, 1.1)
 
 
 #### Table 3 ####
@@ -108,9 +108,9 @@ out_var <- c("Hands-and-knees crawling", "Standing with assistance",
              "Walking with assistance", "Standing alone", "Walking alone")
 
 tbl3 <- hr_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T)
-tbl3flex <- hr_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T)
+tbl3flex <- hr_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T, 1.3, 1.3)
 tbl3supp <- hr_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj)
-tbl3flexsupp <- hr_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj)
+tbl3flexsupp <- hr_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, F, 1.2, 1.3)
 
 #### Table 4 ####
 # concurrent y2 immune markers and y2 easq scores
@@ -123,9 +123,9 @@ expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF
 out_var <- c("EASQ communication Z-score", "EASQ gross motor Z-score", "EASQ personal social Z-score", "EASQ combined Z-score") 
 
 tbl4 <- growth_tbl("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T)
-tbl4flex <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T)
+tbl4flex <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T, 1.3, 1.5)
 tbl4supp <- growth_tbl("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj)
-tbl4flexsupp <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl4flexsupp <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, F, .9,1.1)
 
 #### Table 5 ####
 # concurrent y2 immune markers and y2 cdi scores
@@ -138,9 +138,9 @@ expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF
 out_var <- c("CDI comprehension Z-score", "CDI expressive language Z-score") 
 
 tbl5 <- growth_tbl("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T)
-tbl5flex <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T)
+tbl5flex <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T, 1.3, 1.6)
 tbl5supp <- growth_tbl("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj)
-tbl5flexsupp <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl5flexsupp <- growth_tbl_flex("Immune Status at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, F, .9, 1.1)
 
 #### Table 6 ####
 # y1 immune markers and subsequent y2 easq scores
@@ -160,9 +160,9 @@ expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF
 out_var <- c("EASQ communication Z-score", "EASQ gross motor Z-score", "EASQ personal social Z-score", "EASQ combined Z-score") 
 
 tbl6 <- growth_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T)
-tbl6flex <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T)
+tbl6flex <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T, 1.3, 1.5)
 tbl6supp <- growth_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj)
-tbl6flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl6flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, F, .8, 1)
 
 #### Table 7 ####
 # y1 immune markers and subsequent y2 cdi scores
@@ -182,9 +182,9 @@ expo_var <- c("Ln Pro-inflammatory cytokines/IL-10", "Ln IL-2/IL-10", "Ln GM-CSF
 out_var <- c("CDI comprehension Z-score", "CDI expressive language Z-score") 
 
 tbl7 <- growth_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T)
-tbl7flex <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T)
+tbl7flex <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, T, 1.3, 1.6)
 tbl7supp <- growth_tbl("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj)
-tbl7flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl7flexsupp <- growth_tbl_flex("Immune Status at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, F, .9, 1.1)
 
 #### Table 8 ####
 # IGF and all development outcomes
@@ -198,9 +198,9 @@ out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehe
              "EASQ communication Z-score Year 2", "EASQ gross motor Z-score Year 2", "EASQ personal social Z-score Year 2", "EASQ combined Z-score Year 2") 
 
 tbl8 <- growth_tbl("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T)
-tbl8flex <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T)
+tbl8flex <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T, .5, 1.6)
 tbl8supp <- growth_tbl("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj)
-tbl8flexsupp <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj)
+tbl8flexsupp <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, F, .5, 1)
 
 #### Table 9 ####
 # IGF and hazard ratios
@@ -213,9 +213,9 @@ out_var <- c("Hands-and-knees crawling", "Standing with assistance",
              "Walking with assistance", "Standing alone", "Walking alone")
 
 tbl9 <- hr_tbl("IGF-1", expo_var, out_var, exposure, outcome, HR, HRadj, T)
-tbl9flex <- hr_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, HR, HRadj, T)
+tbl9flex <- hr_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, HR, HRadj, T, .8, 1.5)
 tbl9supp <- hr_tbl("IGF-1", expo_var, out_var, exposure, outcome, HR, HRadj)
-tbl9flexsupp <- hr_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, HR, HRadj)
+tbl9flexsupp <- hr_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, HR, HRadj, F, .5, .9)
 
 
 
@@ -249,7 +249,8 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl7flex, 
              "Table 7: Association between IGF-1 and Child Development" = tbl8flex, 
              "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flex, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v8.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main tables v9.docx', 
+             pr_section = sect_properties)
 
 save_as_docx("Table 1: Association between Immune Status and Child Development Outcomes at Year 1" = tbl2flexsupp, 
              "Table 2: Hazard Ratio for Motor Milestone Attainment for Immune Status at Year 1" = tbl3flexsupp, 
@@ -259,4 +260,13 @@ save_as_docx("Table 1: Association between Immune Status and Child Development O
              "Table 6: Association between Immune Status at Year 1 and CDI Scores at Year 2" = tbl7flexsupp, 
              "Table 7: Association between IGF-1 and Child Development" = tbl8flexsupp, 
              "Table 8: Hazard Ratio for Motor Milestone Attainment for IGF-1" = tbl9flexsupp, 
-             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev main supplementary v8.docx')
+             path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/immune-dev supplementary v9.docx',
+             pr_section = sect_properties)
+
+# # test save
+# sect_properties <- prop_section(
+#   page_size = page_size(orient = "portrait", width=8.5, height=11),
+#   page_margins = page_mar(bottom=.3, top=.3, right=.3, left=.3, gutter = 0)
+# )
+# save_as_docx("tbl1" = autofit(tbl2flex, part="body"), 
+#              path='C:/Users/Sophia/Documents/WASH/WASH Immune and Child Development/temp.docx', pr_section = sect_properties)
