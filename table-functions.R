@@ -203,8 +203,6 @@ growth_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results,
   }else{
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "N, 25th Percentile, and 75th Percentile are from the unadjusted analyses", colwidths = 15)
-    flextbl <- add_footer_row(flextbl, top=F, 
-                              values = "* P-value < 0.2 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 15)
     flextbl <- fontsize(flextbl, part = "all", size = 6)
     flextbl <- width(flextbl, 1:15, width=c(exp_col_size, out_col_size, .3, .5, .5, .5, .5, 1, .3, .5, .5, .5, 1, .3, .5))
     
@@ -476,8 +474,6 @@ hr_tbl_flex <- function(name, expo_var, out_var, exposure, outcome, results, res
   }else{
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "N, 25th Percentile, and 75th Percentile are from the unadjusted analyses", colwidths = 11)
-    flextbl <- add_footer_row(flextbl, top=F, 
-                              values = "*P-value < 0.2 after adjusting for multiple comparisons using the Benjamini-Hochberg procedure", colwidths = 11)
     flextbl <- add_footer_row(flextbl, top=F, 
                               values = "Hazard ratio could not be estimated for sitting without support since nearly all children had achieved this milestone before time of measurement", colwidths = 11)
     flextbl <- fontsize(flextbl, part = "all", size = 6)
