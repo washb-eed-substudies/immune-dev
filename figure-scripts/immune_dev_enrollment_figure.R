@@ -97,9 +97,9 @@ p +
   geom_rect(xmin = 36, xmax=64, ymin=4, ymax=12, color='black',
             fill='white', size=0.25) +
   annotate('text', x= 50, y=10.2,label= "paste(bold('Year 1'))", parse=TRUE, size=3) + 
-  annotate('text', x= 50, y=9.6,label= paste("\n", 376+395+379+380-y1_n, '  missing exposure or outcome', sep=""), size=3) + 
+  annotate('text', x= 50, y=9.6,label= paste("\n", 376+395+379+380-y1_n, ' missing exposure or outcome*', sep=""), size=3) + 
   annotate('text', x= 50, y=7.2,label= "paste(bold('Year 2'))", parse=TRUE, size=3) + 
-  annotate('text', x= 50, y=6.6,label= paste("\n", 358+399+372+401-y2_n, '  missing exposure or outcome', sep=""), size=3) + 
+  annotate('text', x= 50, y=6.6,label= paste("\n", 358+399+372+401-y2_n, ' missing exposure or outcome', sep=""), size=3) + 
   annotate('text', x= 10, y=8,label= 'Specimen Collection', size=4) +
   
   
@@ -111,7 +111,6 @@ p +
   annotate('text', x= 50, y=-4.8,label= paste("\n\n", y2_clusters, ' clusters \n ', y2_n, ' children', sep=''), size=3) +
   annotate('text', x= 10, y=-3,label= 'Analysis', size=4) ->
   p
-
 
 p +
   geom_segment(
@@ -151,7 +150,9 @@ p +
     size=0.15, linejoin = "mitre", lineend = "butt",
     arrow = arrow(length = unit(1, "mm"), type= "closed")) ->
   p
-p
+
+p <- p +
+  annotate("text", x= 50, y=-10,label= "*This substudy did not assess plasma samples in the Nutrition and the Water, Sanitation, and Handwashing arms at Year 1", size=3)
 
 # YOU MAY NEED TO CHANGE THE FILE PATHS HERE
 ggsave(p, file = here("figures/enrollment_figure1.jpg"), height=14, width=9)
