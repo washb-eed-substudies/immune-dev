@@ -2,7 +2,7 @@ rm(list=ls())
 source(here::here("0-config.R"))
 library(tibble)
 data <- tibble(x = -10:100, y= -10:100)
-head(data)
+head(data) 
 
 d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
 exposures_y1 <- c(grep("t2_ln", names(d), value=TRUE), "sumscore_t2_Z")
