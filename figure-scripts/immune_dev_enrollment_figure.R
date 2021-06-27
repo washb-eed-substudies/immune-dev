@@ -1,6 +1,6 @@
 rm(list=ls())
 source(here::here("0-config.R")) 
-library(tibble)
+library(tibble) 
 data <- tibble(x = -10:100, y= -10:100)
 head(data) 
 
