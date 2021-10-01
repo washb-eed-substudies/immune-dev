@@ -5,6 +5,72 @@ source(here::here("0-config.R"))
 d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds")) %>%
   filter(tr %in% c("Nutrition + WSH", "Control"))
 
+# individual cytokines for th2/il10, th1 (IL-12 + IFN), th2 (IL-4 + IL-5 + IL-13) at year 1 
+# outcomes y1 development, year 2 easq
+
+Xvars <- c("t2_ln_il12", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13", 
+           "t2_ratio_il12_il10", "t2_ratio_ifn_il10", 
+           "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10")            
+Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2", "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
+           "z_cdi_say_t3", "z_cdi_und_t3") 
+
+#Fit models
+models <- NULL
+for(i in Xvars){
+  for(j in Yvars){
+    print(i)
+    print(j)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j)
+    res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
+    models <- bind_rows(models, res)
+  }
+}
+
+Xvars <- c("t3_ln_il12", "t3_ln_il4", "t3_ln_il5", "t3_ln_il13", 
+           "t3_ratio_il12_il10", "t3_ratio_ifn_il10", 
+           "t3_ratio_il4_il10", "t3_ratio_il5_il10", "t3_ratio_il13_il10")            
+Yvars <- c("z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
+           "z_cdi_say_t3", "z_cdi_und_t3") 
+
+#Fit models
+for(i in Xvars){
+  for(j in Yvars){
+    print(i)
+    print(j)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j)
+    res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
+    models <- bind_rows(models, res)
+  }
+}
+
+#Get primary contrasts
+results <- NULL
+for(i in 1:nrow(models)){
+  res <- data.frame(X=models$X[i], Y=models$Y[i])
+  preds <- predict_gam_diff(fit=models$fit[i][[1]], d=models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  results <-  bind_rows(results , preds$res)
+}
+
+#Make list of plots
+plot_list <- NULL
+plot_data <- NULL
+for(i in 1:nrow(models)){
+  res <- data.frame(X=models$X[i], Y=models$Y[i])
+  simul_plot <- gam_simul_CI(models$fit[i][[1]], models$dat[i][[1]], xlab=res$X, ylab=res$Y, title="")
+  plot_list[[i]] <-  simul_plot$p
+  plot_data <-  rbind(plot_data, data.frame(Xvar=res$X, Yvar=res$Y, adj=0, simul_plot$pred%>% subset(., select = c(Y,X,id,fit,se.fit,uprP, lwrP,uprS,lwrS))))
+}
+
+#Save models
+saveRDS(models, here("models/individual_unadj_models.RDS"))
+
+#Save results
+saveRDS(results, here("results/unadjusted/individual_unadj_res.RDS"))
+
+saveRDS(plot_data, here("figure-data/individual_unadj_spline_data.RDS"))
+
+
+
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
@@ -67,6 +133,23 @@ for(i in Xvars){
   }
 }
 
+Xvars <- c("t3_ln_il12", "t3_ln_il4", "t3_ln_il5", "t3_ln_il13", 
+           "t3_ratio_il12_il10", "t3_ratio_ifn_il10", 
+           "t3_ratio_il4_il10", "t3_ratio_il5_il10", "t3_ratio_il13_il10")            
+Yvars <- c("z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
+           "z_cdi_say_t3", "z_cdi_und_t3") 
+
+#Fit models
+for(i in Xvars){
+  for(j in Yvars){
+    print(i)
+    print(j)
+    res_adj <- fit_RE_gam(d=d, X=i, Y=j,  W=W3_immune.W3_dev)
+    res <- data.frame(X=i, Y=j, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
+    models <- bind_rows(models, res)
+  }
+}
+
 #Get primary contrasts
 results <- NULL
 for(i in 1:nrow(models)){
@@ -75,12 +158,111 @@ for(i in 1:nrow(models)){
   results <-  bind_rows(results , preds$res)
 }
 
+#Make list of plots
+plot_list <- NULL
+plot_data <- NULL
+for(i in 1:nrow(models)){
+  res <- data.frame(X=models$X[i], Y=models$Y[i])
+  simul_plot <- gam_simul_CI(models$fit[i][[1]], models$dat[i][[1]], xlab=res$X, ylab=res$Y, title="")
+  plot_list[[i]] <-  simul_plot$p
+  plot_data <-  rbind(plot_data, data.frame(Xvar=res$X, Yvar=res$Y, adj=0, simul_plot$pred%>% subset(., select = c(Y,X,id,fit,se.fit,uprP, lwrP,uprS,lwrS))))
+}
+
 #Save models
 saveRDS(models, here("models/individual_adj_models.RDS"))
 
 #Save results
 saveRDS(results, here("results/adjusted/individual_adj_res.RDS"))
 
+saveRDS(plot_data, here("figure-data/individual_adj_spline_data.RDS"))
+
+
+
+
+#### hazard ratio for WHO motor milestones
+Xvars <- c("t2_ln_il12", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13", 
+           "t2_ratio_il12_il10", "t2_ratio_ifn_il10", 
+           "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10")            
+Yvars <- grep("who_", colnames(d), value=T)
+
+HR_models <- NULL
+for(i in Xvars){
+  for(j in Yvars){
+    res_unadj <- fit_HR_GAM(d=d, X=i, Y=j, age="agedays_motor", W=NULL)
+    res <- data.frame(X=i, Y=j, fit=I(list(res_unadj$fit)), dat=I(list(res_unadj$dat)))
+    HR_models <- bind_rows(HR_models, res)
+  }
+}
+
+HR_res <- NULL
+for(i in 1:nrow(HR_models)){
+  res <- data.frame(X=HR_models$X[i], Y=HR_models$Y[i])
+  preds <- predict_gam_HR(fit=HR_models$fit[i][[1]], d=HR_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  HR_res <-  bind_rows(HR_res , preds$res)
+}
+
+#Make list of plots
+HR_plot_list <- NULL
+HR_plot_data <- NULL
+for(i in 1:nrow(HR_models)){
+  res <- data.frame(X=HR_models$X[i], Y=HR_models$Y[i])
+  simul_plot <- gam_simul_CI(HR_models$fit[i][[1]], HR_models$dat[i][[1]], xlab=res$X, ylab=res$Y, title="")
+  HR_plot_list[[i]] <-  simul_plot$p
+  HR_plot_data <-  rbind(HR_plot_data, data.frame(Xvar=res$X, Yvar=res$Y, adj=0, simul_plot$pred))
+}
+
+
+#Save models
+saveRDS(HR_models, here("models/HR_ind_models.RDS"))
+
+#Save results
+saveRDS(HR_res, here("results/unadjusted/HR_ind_res.RDS"))
+
+#Save plot data
+saveRDS(HR_plot_data, here("figure-data/HR_ind_unadj_spline_data.RDS"))
+
+
+
+Xvars <- c("t2_ln_il12", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13", 
+           "t2_ratio_il12_il10", "t2_ratio_ifn_il10", 
+           "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10")            
+Yvars <- grep("who_", colnames(d), value=T)
+
+HR_models <- NULL
+for(i in Xvars){
+  for(j in Yvars){
+    res_unadj <- fit_HR_GAM(d=d, X=i, Y=j, age="agedays_motor", W=W2_immune.W2_dev)
+    res <- data.frame(X=i, Y=j, fit=I(list(res_unadj$fit)), dat=I(list(res_unadj$dat)))
+    HR_models <- bind_rows(HR_models, res)
+  }
+}
+
+HR_res <- NULL
+for(i in 1:nrow(HR_models)){
+  res <- data.frame(X=HR_models$X[i], Y=HR_models$Y[i])
+  preds <- predict_gam_HR(fit=HR_models$fit[i][[1]], d=HR_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=res$X, Yvar=res$Y)
+  HR_res <-  bind_rows(HR_res , preds$res)
+}
+
+#Make list of plots
+HR_plot_list <- NULL
+HR_plot_data <- NULL
+for(i in 1:nrow(HR_models)){
+  res <- data.frame(X=HR_models$X[i], Y=HR_models$Y[i])
+  simul_plot <- gam_simul_CI(HR_models$fit[i][[1]], HR_models$dat[i][[1]], xlab=res$X, ylab=res$Y, title="")
+  HR_plot_list[[i]] <-  simul_plot$p
+  HR_plot_data <-  rbind(HR_plot_data, data.frame(Xvar=res$X, Yvar=res$Y, adj=0, simul_plot$pred))
+}
+
+
+#Save models
+saveRDS(HR_models, here("models/HR_ind_adj_models.RDS"))
+
+#Save results
+saveRDS(HR_res, here("results/adjusted/HR_ind_res.RDS"))
+
+#Save plot data
+saveRDS(HR_plot_data, here("figure-data/HR_ind_adj_spline_data.RDS"))
 
 # Xvars <- c("t2_ratio_th1_th2")            
 # Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2", "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
