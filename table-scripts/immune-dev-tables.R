@@ -119,7 +119,7 @@ y1indsupp <- growth_tbl("Individual Cytokines at Year 1", expo_var, out_var, exp
 y1indflexsupp <- growth_tbl_flex("Individual Cytokines at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, F, 1, 1.3)
 
 # add hazard ratios table 
-exposure <- c("t2_ln_ifn", "sumscore_t2_Z") 
+exposure <- c("t2_ln_il12", "t2_ln_ifn", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13", "sumscore_t2_Z") 
 outcome <- c("who_crawl", "who_stand_supp", 
              "who_walk_supp", "who_stand_nosupp", "who_walk_nosup")
 expo_var <- c("Ln IFN-y Year 1", "Sum score of 13 cytokines Year 1") 
