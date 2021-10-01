@@ -10,6 +10,7 @@ H2 <- readRDS(here('results/unadjusted/H2_res.RDS'))
 H3 <- readRDS(here('results/unadjusted/H3_res.RDS'))
 H4 <- readRDS(here('results/unadjusted/H4_res.RDS'))
 HR <- readRDS(here('results/unadjusted/HR_res.RDS'))
+indunadj <- readRDS(here('results/unadjusted/individual_unadj_res.RDS'))
 
 H1adj <- readRDS(here('results/adjusted/H1_adj_res.RDS'))
 H2adj <- readRDS(here('results/adjusted/H2_adj_res.RDS'))
@@ -18,7 +19,7 @@ H4adj <- readRDS(here('results/adjusted/H4_adj_res.RDS'))
 HRadj <- readRDS(here('results/adjusted/HR_adj_res.RDS'))
 indadj <- readRDS(here('results/adjusted/individual_adj_res.RDS'))
 
-unadj <- rbind(H1, H2, H3, H4)
+unadj <- rbind(H1, H2, H3, H4, indunadj)
 adj <- rbind(H1adj, H2adj, H3adj, H4adj, indadj)
 
 #### MAIN TABLES ####
@@ -249,6 +250,8 @@ out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehe
              "EASQ communication Z-score Year 2", "EASQ gross motor Z-score Year 2", "EASQ personal social Z-score Year 2", "EASQ combined Z-score Year 2") 
 
 title_igf <- "Association between IGF-1 and Child Development Outcomes"
+igf <- growth_tbl("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T)
+igfflex <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T, .5, 1)
 igfsupp <- growth_tbl("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj)
 igfflexsupp <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, F, .5, 1)
 
@@ -277,6 +280,7 @@ write.csv(y1ind, here('tables/main/immune-dev-y1-ind-cyt.csv'))
 write.csv(y1indhr, here('tables/main/immune-dev-y1-ind-cyt-hr.csv'))
 write.csv(y1rat, here('tables/main/immune-dev-y1-ratios.csv'))
 write.csv(y1rathr, here('tables/main/immune-dev-y1-ratios-hr.csv'))
+write.csv(igf, here('tables/main/immune-dev-igf.csv'))
 
 write.csv(y1crpagpsupp, here('tables/supplementary/immune-dev-y1-crp-agp.csv'))
 write.csv(y1crpagphrsupp, here('tables/supplementary/immune-dev-y1-crp-agp-hr.csv'))
@@ -298,7 +302,8 @@ save_as_docx("Table 1: Characteristics of Participants" = enroll,
              "Table 5" = y1ratflex, 
              "Table 6" = y1crpagphrflex, 
              "Table 7" = y1crpagpflex, 
-             path='/Users/sophiatan/Documents/WASH/immune-dev main tables v11.docx', 
+             "Table 8" = igfflex, 
+             path='/Users/sophiatan/Documents/WASH/immune-dev main tables v12.docx', 
              pr_section = sect_properties)
 
 save_as_docx("Table 1" = y1indhrflexsupp, 
@@ -312,5 +317,5 @@ save_as_docx("Table 1" = y1indhrflexsupp,
              "Table 9" = y2crpagpflexsupp, 
              "Table 10" = igfhrflexsupp, 
              "Table 11" = igfflexsupp, 
-             path='/Users/sophiatan/Documents/WASH/immune-dev supplementary v11.docx',
+             path='/Users/sophiatan/Documents/WASH/immune-dev supplementary v12.docx',
              pr_section = sect_properties)
