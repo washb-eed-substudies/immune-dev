@@ -8,14 +8,16 @@ H1 <- readRDS(here('results/unadjusted/H1_res.RDS'))
 H2 <- readRDS(here('results/unadjusted/H2_res.RDS'))
 H3 <- readRDS(here('results/unadjusted/H3_res.RDS'))
 H4 <- readRDS(here('results/unadjusted/H4_res.RDS')) 
-HR <- readRDS(here('results/unadjusted/HR_res.RDS'))
+HR <- rbind(readRDS(here('results/unadjusted/HR_res.RDS')), 
+            readRDS(here('results/unadjusted/HR_ind_res.RDS')))
 ind_unadj <- readRDS(here('results/unadjusted/individual_unadj_res.RDS'))
 
 H1_adj <- readRDS(here('results/adjusted/H1_adj_res.RDS'))
 H2_adj <- readRDS(here('results/adjusted/H2_adj_res.RDS')) 
 H3_adj <- readRDS(here('results/adjusted/H3_adj_res.RDS'))
 H4_adj <- readRDS(here('results/adjusted/H4_adj_res.RDS')) 
-HR_adj <- readRDS(here('results/adjusted/HR_adj_res.RDS'))
+HR_adj <- rbind(readRDS(here('results/adjusted/HR_adj_res.RDS')), 
+            readRDS(here('results/adjusted/HR_ind_res.RDS')))
 ind_adj <- readRDS(here('results/adjusted/individual_adj_res.RDS'))
 
 H1_res <- H1 %>% select(X, Y, Pval)
