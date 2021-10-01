@@ -122,7 +122,7 @@ y1indflexsupp <- growth_tbl_flex("Individual Cytokines at Year 1", expo_var, out
 exposure <- c("t2_ln_il12", "t2_ln_ifn", "t2_ln_il4", "t2_ln_il5", "t2_ln_il13", "sumscore_t2_Z") 
 outcome <- c("who_crawl", "who_stand_supp", 
              "who_walk_supp", "who_stand_nosupp", "who_walk_nosup")
-expo_var <- c("Ln IFN-y Year 1", "Sum score of 13 cytokines Year 1") 
+expo_var <- c("Ln IL-12 Year 1", "Ln IFN-y Year 1", "Ln IL-4 Year 1", "Ln IL-5 Year 1", "Ln IL-13 Year 1", "Sum score of 13 cytokines Year 1") 
 out_var <- c("Hands-and-knees crawling", "Standing with assistance",
              "Walking with assistance", "Standing alone", "Walking alone")
 
