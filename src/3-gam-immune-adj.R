@@ -2,13 +2,13 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-dfull <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
+dfull <- d #readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
 d <- dfull %>% filter(tr %in% c("Nutrition + WSH", "Control")) 
   
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
-         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "HHwealth", "tr",
+         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "HHwealth_scaled", "tr",
          "ari7d_t2", "diar7d_t2", "nose7d_t2", 
          "fci_t2", "cesd_sum_t2", "life_viol_any_t3")
 
@@ -110,6 +110,7 @@ saveRDS(H1_adj_res, here("results/adjusted/H1_adj_res.RDS"))
 #Save plot data
 saveRDS(H1_adj_plot_data, here("figure-data/H1_adj_spline_data.RDS"))
 
+rm(H1_adj_models, H1_adj_res, H1_adj_plot_list, H1_adj_plot_data)
 
 
 #### Hypothesis 2: immune status and subsequent development ####
@@ -163,6 +164,7 @@ saveRDS(H2_adj_res, here("results/adjusted/H2_adj_res.RDS"))
 #Save plot data
 saveRDS(H2_plot_data, here("figure-data/H2_adj_spline_data.RDS"))
 
+rm(H2_adj_models, H2_adj_res, H2_plot_list, H2_plot_data)
 
 
 #### Hypothesis 3: sum score and development ####
@@ -237,6 +239,7 @@ saveRDS(H3_adj_res, here("results/adjusted/H3_adj_res.RDS"))
 #Save plot data
 saveRDS(H3_plot_data, here("figure-data/H3_adj_spline_data.RDS"))
 
+rm(H3_adj_models, H3_adj_res, H3_plot_list, H3_plot_data)
 
 #### Hypothesis 4 ####
 # IGF and concurrent and subsequent development
@@ -304,6 +307,7 @@ saveRDS(H4_adj_res, here("results/adjusted/H4_adj_res.RDS"))
 #Save plot data
 saveRDS(H4_adj_plot_data, here("figure-data/H4_adj_spline_data.RDS"))
 
+rm(H4_adj_models, H4_adj_res, H4_plot_list, H4_plot_data)
 
 #### hazard ratio for WHO motor milestones
 

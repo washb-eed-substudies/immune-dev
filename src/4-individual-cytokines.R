@@ -2,7 +2,7 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds")) %>%
+d <- d %>%
   filter(tr %in% c("Nutrition + WSH", "Control"))
 
 # individual cytokines for th2/il10, th1 (IL-12 + IFN), th2 (IL-4 + IL-5 + IL-13) at year 1 
@@ -74,7 +74,7 @@ saveRDS(plot_data, here("figure-data/individual_unadj_spline_data.RDS"))
 #Set list of adjustment variables
 #Make vectors of adjustment variable names
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
-         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "HHwealth", "tr",
+         "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "HHwealth_scaled", "tr",
          "ari7d_t2", "diar7d_t2", "nose7d_t2", 
          "fci_t2", "cesd_sum_t2", "life_viol_any_t3")
 
@@ -264,16 +264,20 @@ saveRDS(HR_res, here("results/adjusted/HR_ind_res.RDS"))
 #Save plot data
 saveRDS(HR_plot_data, here("figure-data/HR_ind_adj_spline_data.RDS"))
 
-# Xvars <- c("t2_ratio_th1_th2")            
-# Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2", "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq", 
-#            "z_cdi_say_t3", "z_cdi_und_t3") 
-# 
+
+
+
+Xvars <- c("t2_ratio_th1_th2")
+Yvars <- c("sum_who", "z_cdi_und_t2", "z_cdi_say_t2", "z_comm_easq", "z_motor_easq", "z_personal_easq", "z_combined_easq",
+           "z_cdi_say_t3", "z_cdi_und_t3")
+
 # eff_models <- NULL
 # for(i in Xvars){
 #   for(j in Yvars){
 #     print(i)
 #     print(j)
-#     res_adj <- fit_RE_gam(d=d, X=i, Y=j, V="tr", W=pick_covariates(j))
+#     W=pick_covariates(j)
+#     res_adj <- fit_RE_gam(d=d, X=i, Y=j, V="tr", W=W[W!="tr"])
 #     res <- data.frame(X=i, Y=j, V="tr", int.p =res_adj$int.p, fit=I(list(res_adj$fit)), dat=I(list(res_adj$dat)))
 #     eff_models <- bind_rows(eff_models, res)
 #   }
@@ -282,6 +286,8 @@ saveRDS(HR_plot_data, here("figure-data/HR_ind_adj_spline_data.RDS"))
 # eff_results <- NULL
 # for(i in 1:nrow(eff_models)){
 #   preds <- predict_gam_emm(fit=eff_models$fit[i][[1]], d=eff_models$dat[i][[1]], quantile_diff=c(0.25,0.75), Xvar=eff_models$X[i], Yvar=eff_models$Y[i])
-#   gamm_diff_res <- data.frame(V="tr", preds$res)
-#   eff_results <-  bind_rows(eff_results, preds$res)
+#   gamm_diff_res <- data.frame(V="tr", preds$res) %>% mutate(int.Pval = c(NA, eff_models$int.p[[i]]))
+#   eff_results <-  bind_rows(eff_results, gamm_diff_res)
 # }
+# 
+# view(eff_results)

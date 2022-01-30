@@ -29,6 +29,9 @@ if(!require(washbgam)){
   library(washbgam)
 }
 
+library(boxr)
+box_auth()
+d <- box_read(871638120165) %>% filter(.data[["immune_dev"]] == 1)
 
 dropboxDir <- NULL
 if(dir.exists("C:/Users/andre/Dropbox/WASHB-EE-analysis/WBB-EE-analysis/")){ 

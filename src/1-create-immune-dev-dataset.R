@@ -4,14 +4,14 @@ rm(list=ls())
 
 source(here::here("0-config.R"))
 
-# contains immune-growth covariates and exposures
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-growth-analysis-dataset.rds"))
-names(d)
-
-# merge in development outcomes
-dev <- readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-development.RDS"))
-
-dfull <- left_join(d, dev, "childid")
+# # contains immune-growth covariates and exposures
+# d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-growth-analysis-dataset.rds"))
+# names(d)
+# 
+# # merge in development outcomes
+# dev <- readRDS(paste0(dropboxDir, "Data/Cleaned/Audrie/bangladesh-development.RDS"))
+# 
+# d <- left_join(d, dev, "childid")
 
 
 
@@ -21,7 +21,7 @@ dfull <- left_join(d, dev, "childid")
 Wvars<-c("sex","birthord", "momage","momheight","momedu", 
          "hfiacat", "Nlt18","Ncomp", "watmin", "walls", "floor", "HHwealth",
          "ari7d_t2", "diar7d_t2", "nose7d_t2", 
-         "fci_t2", "cesd_sum_t2", "life_viol_any_t3", "tr")
+         "fci_t2", "cesd_sum_t2", "life_viol_any_t3_cat", "tr")
 
 generate_miss_tbl <- function(Wvars, d){
   W <- d %>% select(all_of(Wvars))  
@@ -32,7 +32,7 @@ generate_miss_tbl <- function(Wvars, d){
   miss 
 }
 
-generate_miss_tbl(Wvars, dfull)
+generate_miss_tbl(Wvars, d)
 
 Wvars22<-c("ageday_bt2", "agedays_motor", "month_bt2", "month_motor", "laz_t1", "waz_t1") 
 Wvars33<-c("ageday_bt3", "month_bt3",
@@ -60,7 +60,7 @@ for (i in Xvars){
     print(i)
     print(j)
     W = W2_immune.W2_dev
-    d_sub <- subset(dfull, !is.na(dfull[,i]) & !is.na(dfull[,j]))
+    d_sub <- subset(d, !is.na(d[,i]) & !is.na(d[,j]))
     print(generate_miss_tbl(W, d_sub))
   }
 }
@@ -76,7 +76,7 @@ for (i in Xvars){
     print(i)
     print(j)
     W = add_t3_covariates(j, W3_immune.W3_dev)
-    d_sub <- subset(dfull, !is.na(dfull[,i]) & !is.na(dfull[,j]))
+    d_sub <- subset(d, !is.na(d[,i]) & !is.na(d[,j]))
     print(generate_miss_tbl(W, d_sub))
   }
 }
@@ -92,9 +92,11 @@ for (i in Xvars){
     print(i)
     print(j)
     W = add_t3_covariates(j, W2_immune.W3_dev)
-    d_sub <- subset(dfull, !is.na(dfull[,i]) & !is.na(dfull[,j]))
+    d_sub <- subset(d, !is.na(d[,i]) & !is.na(d[,j]))
     print(generate_miss_tbl(W, d_sub))
   }
 }
 
-saveRDS(dfull, paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
+# saveRDS(d, paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
+
+box_write(148798406168, file_name = "immune-dev.RDS")

@@ -2,7 +2,7 @@ rm(list=ls())
  
 source(here::here("0-config.R"))
 
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
+# d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
 
 #Example:
 
@@ -86,12 +86,12 @@ saveRDS(H1_res, here("results/unadjusted/H1_res.RDS"))
 
 
 #Save plots
-#saveRDS(H1_plot_list, here("figure-objects/H1_unadj_splines.RDS"))
+saveRDS(H1_plot_list, here("figure-objects/H1_unadj_splines.RDS"))
 
 #Save plot data
 saveRDS(H1_plot_data, here("figure-data/H1_unadj_spline_data.RDS"))
 
-
+rm(H1_models, H1_res, H1_plot_data, H1_plot_list)
 
 #### Hypothesis 2: immune status and subsequent development ####
 # all immune outcomes at y1 v. development at y2
@@ -137,11 +137,12 @@ saveRDS(H2_res, here("results/unadjusted/H2_res.RDS"))
 
 
 #Save plots
-#saveRDS(H2_plot_list, here("figure-objects/H2_unadj_splines.RDS"))
+saveRDS(H2_plot_list, here("figure-objects/H2_unadj_splines.RDS"))
 
 #Save plot data
 saveRDS(H2_plot_data, here("figure-data/H2_unadj_spline_data.RDS"))
 
+rm(H2_models, H2_res, H2_plot_data, H2_plot_list)
 
 
 #### Hypothesis 3: sum score and development ####
@@ -201,11 +202,12 @@ saveRDS(H3_res, here("results/unadjusted/H3_res.RDS"))
 
 
 #Save plots
-#saveRDS(H3_plot_list, here("figure-objects/H3_unadj_splines.RDS"))
+saveRDS(H3_plot_list, here("figure-objects/H3_unadj_splines.RDS"))
 
 #Save plot data
 saveRDS(H3_plot_data, here("figure-data/H3_unadj_spline_data.RDS"))
 
+rm(H3_models, H3_res, H3_plot_data, H3_plot_list)
 
 #### Hypothesis 4 ####
 # IGF and concurrent and subsequent development
@@ -264,11 +266,12 @@ saveRDS(H4_res, here("results/unadjusted/H4_res.RDS"))
 
 
 #Save plots
-#saveRDS(H4_plot_list, here("figure-objects/H4_unadj_splines.RDS"))
+saveRDS(H4_plot_list, here("figure-objects/H4_unadj_splines.RDS"))
 
 #Save plot data
 saveRDS(H4_plot_data, here("figure-data/H4_unadj_spline_data.RDS"))
 
+rm(H4_models, H4_res, H4_plot_data, H4_plot_list)
 
 #### hazard ratio for WHO motor milestones
 
