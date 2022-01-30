@@ -206,7 +206,7 @@ out_var <- c("CDI comprehension Z-score Year 2", "CDI expressive language Z-scor
              "EASQ communication Z-score Year 2", "EASQ gross motor Z-score Year 2", "EASQ personal social Z-score Year 2", "EASQ combined Z-score Year 2")
 
 title_y2rat <- "Association between Cytokine Ratios at Year 2 and Child Development Outcomes"
-y2ratflex <- hr_tbl_flex("Cytokine Ratios at Year 2", expo_var, out_var, exposure, outcome, HR, HRadj, T, 1.3, 1.3)
+y2ratflex <- growth_tbl_flex("Cytokine Ratios at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T, 1.3, 1.3)
 y2ratsupp <- growth_tbl("Cytokine Ratios at Year 2", expo_var, out_var, exposure, outcome, unadj, adj,)
 y2ratflexsupp <- growth_tbl_flex("Cytokine Ratios at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, F, .9, 1.1)
 
