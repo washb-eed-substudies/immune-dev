@@ -4,7 +4,7 @@ source(here::here("0-config.R"))
 source(here::here("table-functions.R"))
 
 # load enrollment characteristics and results
-d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
+# d <- readRDS(paste0(dropboxDir,"Data/Cleaned/Audrie/bangladesh-immune-development-analysis-dataset.rds"))
 H1 <- readRDS(here('results/unadjusted/H1_res.RDS'))
 H2 <- readRDS(here('results/unadjusted/H2_res.RDS'))
 H3 <- readRDS(here('results/unadjusted/H3_res.RDS'))
@@ -166,12 +166,15 @@ y1ratsupp <- growth_tbl("Cytokine Ratios at Year 1", expo_var, out_var, exposure
 y1ratflexsupp <- growth_tbl_flex("Cytokine Ratios at Year 1", expo_var, out_var, exposure, outcome, unadj, adj, F, 1, 1.3)
 
 # concurrent y1 immune markers and y1 who motor milestones hazard ratios
-exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", "t2_ratio_th1_il10", "t2_ratio_th2_il10",     
+exposure <- c("t2_ratio_pro_il10", "t2_ratio_il2_il10", "t2_ratio_gmc_il10", 
+              "t2_ratio_th1_il10", "t2_ratio_il12_il10", "t2_ratio_ifn_il10", 
+              "t2_ratio_th2_il10", "t2_ratio_il4_il10", "t2_ratio_il5_il10", "t2_ratio_il13_il10",
               "t2_ratio_th17_il10", "t2_ratio_th1_th2", "t2_ratio_th1_th17") 
 outcome <- c("who_crawl", "who_stand_supp", 
              "who_walk_supp", "who_stand_nosupp", "who_walk_nosup")
 expo_var <- c("Ln Pro-inflammatory cytokines/IL-10 Year 1", "Ln IL-2/IL-10 Year 1", "Ln GM-CSF/IL-10 Year 1", 
-              "Ln Th1/IL-10 Year 1", "Ln Th2/IL-10 Year 1",     
+              "Ln Th1/IL-10 Year 1", "Ln IL-12/IL-10 Year 1", "Ln IFN-y/IL-10 Year 1",
+              "Ln Th2/IL-10 Year 1", "Ln IL-4/IL-10 Year 1", "Ln IL-5/IL-10 Year 1", "Ln IL-13/IL-10 Year 1",
               "Ln Th17/IL-10 Year 1", "Ln Th1/Th2 Year 1", "Ln Th1/Th17 Year 1") 
 out_var <- c("Hands-and-knees crawling", "Standing with assistance",
              "Walking with assistance", "Standing alone", "Walking alone")
@@ -222,10 +225,10 @@ out_var <- c("Hands-and-knees crawling", "Standing with assistance",
              "Walking with assistance", "Standing alone", "Walking alone")
 
 title_y1crpagphr <- "Hazard Ratio for Motor Milestone Attainment for CRP and AGP at Year 1"
-y1crpagphr <- hr_tbl("Cytokine Ratios at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T)
-y1crpagphrflex <- hr_tbl_flex("Cytokine Ratios at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T, 1.3, 1.3)
-y1crpagphrsupp <- hr_tbl("Cytokine Ratios at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj)
-y1crpagphrflexsupp <- hr_tbl_flex("Cytokine Ratios at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, F, 1.2, 1.3)
+y1crpagphr <- hr_tbl("CRP and AGP at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T)
+y1crpagphrflex <- hr_tbl_flex("CRP and AGP at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, T, 1.3, 1.3)
+y1crpagphrsupp <- hr_tbl("CRP and AGP at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj)
+y1crpagphrflexsupp <- hr_tbl_flex("CRP and AGP at Year 1", expo_var, out_var, exposure, outcome, HR, HRadj, F, 1.2, 1.3)
 
 # y2 crp/agp and concurrent development (supplementary only)
 exposure <- c("t3_ln_crp", "t3_ln_agp") 
@@ -236,6 +239,8 @@ out_var <- c("CDI comprehension Z-score Year 2", "CDI expressive language Z-scor
              "EASQ communication Z-score Year 2", "EASQ gross motor Z-score Year 2", "EASQ personal social Z-score Year 2", "EASQ combined Z-score Year 2")
 
 title_y2crpagp <- "Association between CRP and AGP at Year 2 and Child Development Outcomes"
+y2crpagp <- growth_tbl("CRP and AGP at Year 2", expo_var, out_var, exposure, outcome, unadj, adj,T)
+y2crpagpflex <- growth_tbl_flex("CRP and AGP at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, T, .9, 1.1)
 y2crpagpsupp <- growth_tbl("CRP and AGP at Year 2", expo_var, out_var, exposure, outcome, unadj, adj,)
 y2crpagpflexsupp <- growth_tbl_flex("CRP and AGP at Year 2", expo_var, out_var, exposure, outcome, unadj, adj, F, .9, 1.1)
 
@@ -250,8 +255,6 @@ out_var <- c("Sum of 2nd, 4th, 5th, and 6th WHO motor milestones", "CDI comprehe
              "EASQ communication Z-score Year 2", "EASQ gross motor Z-score Year 2", "EASQ personal social Z-score Year 2", "EASQ combined Z-score Year 2") 
 
 title_igf <- "Association between IGF-1 and Child Development Outcomes"
-igf <- growth_tbl("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T)
-igfflex <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, T, .5, 1)
 igfsupp <- growth_tbl("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj)
 igfflexsupp <- growth_tbl_flex("IGF-1", expo_var, out_var, exposure, outcome, unadj, adj, F, .5, 1)
 
@@ -280,7 +283,7 @@ write.csv(y1ind, here('tables/main/immune-dev-y1-ind-cyt.csv'))
 write.csv(y1indhr, here('tables/main/immune-dev-y1-ind-cyt-hr.csv'))
 write.csv(y1rat, here('tables/main/immune-dev-y1-ratios.csv'))
 write.csv(y1rathr, here('tables/main/immune-dev-y1-ratios-hr.csv'))
-write.csv(igf, here('tables/main/immune-dev-igf.csv'))
+write.csv(y2crpagp, here('tables/main/immune-dev-y2-crp-agp.csv'))
 
 write.csv(y1crpagpsupp, here('tables/supplementary/immune-dev-y1-crp-agp.csv'))
 write.csv(y1crpagphrsupp, here('tables/supplementary/immune-dev-y1-crp-agp-hr.csv'))
@@ -302,8 +305,8 @@ save_as_docx("Table 1: Characteristics of Participants" = enroll,
              "Table 5" = y1ratflex, 
              "Table 6" = y1crpagphrflex, 
              "Table 7" = y1crpagpflex, 
-             "Table 8" = igfflex, 
-             path='/Users/sophiatan/Documents/WASH/immune-dev main tables v12.docx', 
+             "Table 8" = y2crpagpflex, 
+             path='/Users/sophiatan/Documents/WASH/immune-dev main tables v13.docx', 
              pr_section = sect_properties)
 
 save_as_docx("Table 1" = y1indhrflexsupp, 
@@ -317,5 +320,5 @@ save_as_docx("Table 1" = y1indhrflexsupp,
              "Table 9" = y2crpagpflexsupp, 
              "Table 10" = igfhrflexsupp, 
              "Table 11" = igfflexsupp, 
-             path='/Users/sophiatan/Documents/WASH/immune-dev supplementary v12.docx',
+             path='/Users/sophiatan/Documents/WASH/immune-dev supplementary v13.docx',
              pr_section = sect_properties)
