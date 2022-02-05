@@ -10,7 +10,7 @@ source(here::here("0-config.R"))
 res_unadj <- fit_RE_gam(d=d, X="t3_ratio_pro_il10", Y="laz_t3",  W=NULL)
 
 #Get predictions of differences from the 25th percentile of exposure
-preds_unadj <- predict_gam_diff(fit=res_unadj$fit, d=res_unadj$dat, quantile_diff=c(0.25,0.75), Xvar="t3_cort_z01", Yvar="laz_t3")
+preds_unadj <- predict_gam_diff(fit=res_unadj$fit, d=res_unadj$dat, quantile_diff=c(0.25,0.75), Xvar="t3_ratio_pro_il10", Yvar="laz_t3")
 
 
 #Primary parameter we are estimating: difference between 25th and 75th percentile of the exposure
